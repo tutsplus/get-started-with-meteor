@@ -1,0 +1,57 @@
+<template name='games'>
+{{#requireLogin}}
+    {{#if Template.subscriptionsReady}}
+        <h2> Games </h2>
+        {{#if possibleOpponents}}
+            <form class='form-inline'>
+                <label> Start new game with </label>
+                <select name='otherPlayer' class='form-control'>
+                    {{#each opp in possibleOpponents}}
+                        <option value='{{opp._id}}'> {{opp.username}} </option>
+                    {{/each}}
+                </select>
+
+                <label> I will play </label>
+                <select name='color' class='form-control'>
+                    <option value='w'> White </option>
+                    <option value='b'> Black </option>
+                </select>
+
+                <button class='btn btn-primary'> Create Game </button>
+            </form>
+        {{else}}
+            <p> Before starting a game, you need to make some friends. Or, maybe you're already playing with all your friends!</p>
+        {{/if}}
+
+        <h2> Current Games </h2>
+        <ul>
+            {{#each currentGames}}
+                <li>
+                    {{#if needsConfirmation}}
+                        {{#if byMe}}
+                            Game request from {{username opponent}}
+                            <button id='accept' class='btn btn-xs btn-success'> Accept </button>
+                            <button id='decline' class='btn btn-xs btn-warning'> Decline </button>
+                        {{else}}
+                            Game betweeen {{username w}} and {{username b}} (Waiting for confirmation by {{username needsConfirmation}})
+                        {{/if}}
+
+                    {{else}}
+                        <a href='/games/{{_id}}'> Game betweeen {{username w}} and {{username b}} </a>
+                    {{/if}}
+                </li>
+            {{/each}}
+        </ul>
+
+        <h2> Archived Games </h2>
+        <ul>
+            {{#each archivedGames}}
+            <li> <a href='/games/{{_id}}'> {{username w}} vs. {{username b}} ({{result}}) </a> </li>
+            {{/each}}
+        </ul>
+
+    {{else}}
+        {{> spinner}}
+    {{/if}}
+{{/requireLogin}}
+</template>

@@ -1,0 +1,19 @@
+<template name='users'>
+    <ul class='list-group'>
+        {{#each users}}
+            {{> user }}
+        {{/each}}
+    </ul>
+</template>
+
+<template name='user'>
+    <li class='list-group-item'> 
+    {{#if currentUser }}
+        <button class='btn btn-default add'>
+            {{#if alreadyFriends _id}} - {{else}} + {{/if}}
+        </button>
+    {{/if}}
+    
+    {{username}} 
+    </li>
+</template>

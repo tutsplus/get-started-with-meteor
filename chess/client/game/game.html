@@ -1,0 +1,60 @@
+<template name='game'>
+{{#if Template.subscriptionsReady}}
+<div class='row'>
+    <div class='col-sm-4'> {{> board rows}} </div>
+
+    <div class='col-sm-4'> 
+        {{#if result}}
+            <h2> {{result}} </h2>
+        {{else}}
+            <h2> Currently, {{currentTurn}}'s turn</h2>
+        {{/if}}
+        
+        <h3> Moves </h3>
+        {{> stepper result}}
+        {{> moveList moves}}
+    </div>
+
+    <div class='col-sm-4'> {{> chat}} </div>
+</div>
+{{/if}}
+</template>
+
+<template name='stepper'>
+{{#if canStep this}}
+    <button class='btn btn-primary' id='step'> Step Through Game </button>
+{{/if}}
+
+{{#if stepping}}
+    <div class='btn-group'>
+        <button id='prev' class='btn btn-default'> &larr; Previous </button>
+        <button id='next' class='btn btn-default'> Next &rarr; </button>
+    </div>
+{{/if}}
+
+
+
+</template>
+
+<template name='moveList'>
+<ol>
+    {{#each move in this}}
+        <li> {{move}} </li>
+    {{/each}}
+</ol>
+</template>
+
+
+<template name='board'>
+<table>
+    {{#each row in this}}
+        <tr>
+            {{#each row}}
+                <td id='{{cell}}'> 
+                    {{{img}}}
+                </td>
+            {{/each}}
+        </tr>
+    {{/each}}
+</table>
+</template>
